@@ -42,6 +42,9 @@
 
   docker run -it quiz-app
 
+  docker run -it --rm quiz-app
+
+- docker rmi quiz-app
 
 ** **
 > 오류
