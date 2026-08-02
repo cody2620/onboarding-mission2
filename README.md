@@ -37,6 +37,13 @@
 6. 데이터 파일 설명(state.json 등)
 
 ** **
+> 명령어
+- 실행
+
+  docker run -it quiz-app
+
+
+** **
 > 오류
 
 0802
