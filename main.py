@@ -6,12 +6,14 @@ def main():
     game = QuizGame()
 
     while True:
+        print("--------")
         print("제목")
-        print("퀴즈 출제")
-        print("퀴즈 등록")
-        print("퀴즈 목록")
-        print("점수 확인")
-        print("종료")
+        print("--------")
+        print("1. 퀴즈 출제")
+        print("2. 퀴즈 등록")
+        print("3. 퀴즈 목록")
+        print("4. 점수 확인")
+        print("5. 종료")
 
         choice = input("메뉴를 선택하세요: ")
 
