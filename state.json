@@ -1,0 +1,25 @@
+{
+  "quiz_list": [
+    {
+      "question": "테스트 1",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": "4"
+    },
+    {
+      "question": "테스트 2",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": "2"
+    }
+  ],
+  "best_score": 1
+}
