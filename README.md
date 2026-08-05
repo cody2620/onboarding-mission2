@@ -1,11 +1,9 @@
 
 > ## 프로젝트 개요
 * 개발환경
-  - python 버전:
-  - orbStack: Version 2.0.5
-  - Docker: 
-  - 프레임워크: Visual Studio Code 
-  - 
+  - 사용 언어: Python 3.12.13
+  - OrbStack(Docker): Version 2.0.5
+  - IDE: Visual Studio Code
 
 > ## 퀴즈 주제와 선정 이유
 
@@ -20,12 +18,22 @@
 * 퀴즈 종료
 
 > ## 파일 구조
+```
+project-root/
+├── 📄 .gitignore  
+├── 📄 Dockerfile  : Docker 설정
+├── 📄 game.py     : 게임 로직 
+├── 📄 main.py     : 메인 프로그램
+├── 📄 quiz.py     : 퀴즈 클래스
+├── 📄 README.md   
+├── 📄 state.json  : 퀴즈 목록, 최고 점수 저장소
+└── 📄 utils.py    : 유틸리티 함수
+```
 
 > ## 데이터 파일 설명(state.json 경로/역할/스키마)
 * state.json 경로/역할/필드 구조)
 
 > ## Git: README 작성 후 최종 푸시한다.
-
 
 **  **
 ## 최종 결과물
@@ -168,13 +176,14 @@
 - docker rmi quiz-app
 
 ** **
-> 오류 및 수정할 것들
+### ❗오류 및 수정할 것들
 
-0802
+8월 2일
 - 5를 제외하고 어떤 번호를 넣어도 "잘못된 입력입니다" 가 출력됨
-  : 그냥 반영이 늦게 된듯
 
-0805
+  ✔️그냥 반영이 늦게 된듯
+
+8월 5일
 - 퀴즈 등록시 정답을 등록할때 문자를 입력해도 등록이 가능함
 
 
