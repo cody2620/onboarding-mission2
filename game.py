@@ -1,5 +1,6 @@
 import json
 from quiz import Quiz
+from utils import get_valid_number
 
 class QuizGame:
     def __init__(self):
@@ -10,7 +11,7 @@ class QuizGame:
     # json에서 데이터 불러오기
     def load_from_json(self):
         try:
-            with open('state.json', 'r') as f:
+            with open('state.json', 'r', encoding='utf-8') as f:
                 data = json.load(f)
 
             # 퀴즈 데이터 복원
@@ -21,6 +22,7 @@ class QuizGame:
             
         except FileNotFoundError:
             print("⚠️ state.json 파일을 찾을 수 없습니다.")
+            
         except json.JSONDecodeError:
             print("⚠️ state.json 파일이 손상되었습니다.")
 
@@ -31,7 +33,7 @@ class QuizGame:
             "best_score": self.best_score
         }
 
-        with open('state.json', 'w') as f:
+        with open('state.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
         print("✅ 데이터가 저장되었습니다")
@@ -96,7 +98,7 @@ class QuizGame:
 
     def ask_question(self, quiz):
         print(f"\n {quiz.question}")
-        answer = input("정답: ")
+        answer = get_valid_number("정답: ", 1, len(quiz.choices))
 
         if answer == quiz.answer:
             print("정답")
