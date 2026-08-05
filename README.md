@@ -3,7 +3,8 @@ onboarding-mission2
 > ## 프로젝트 개요
 * 개발환경
   - python 버전:
-  - orbStack의 Docker
+  - orbStack: Version 2.0.5
+  - Docker: 
   - 프레임워크: Visual Studio Code 
   - 
 
