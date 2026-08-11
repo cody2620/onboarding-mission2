@@ -2,23 +2,28 @@
   "quiz_list": [
     {
       "question": "테스트 1",
-      "choices": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
+      "choices": ["1", "2", "3", "4"],
       "answer": "4"
     },
     {
       "question": "테스트 2",
-      "choices": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
+      "choices": ["1", "2", "3", "4"],
       "answer": "2"
+    },
+    {
+      "question": "2",
+      "choices": ["2", "2", "2", "2"],
+      "answer": "2"
+    },
+    {
+      "question": "다음 중 파이썬에서 사용할 수 있는 올바른 변수명은?",
+      "choices": ["7th_player", "my name", "_my_score", "if"],
+      "answer": "3"
+    },
+    {
+      "question": "문제예시",
+      "choices": ["보기1", "보기2", "보기3", "보기4"],
+      "answer": "정답란"
     }
   ],
   "best_score": 1
