@@ -21,9 +21,6 @@ def main():
     init_game_state()
     game = QuizGame()
 
-    # 저장된 데이터 불러오기
-    game.load_from_json() 
-
     try:
         while True:
             print("\n 📌 Home 📌 \n")

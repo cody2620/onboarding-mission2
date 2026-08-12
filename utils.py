@@ -1,3 +1,12 @@
+def get_non_empty_string(prompt):
+    while True:
+        raw = input(prompt).strip()
+        if not raw:
+            print("⚠️ 내용을 입력해 주세요")
+            continue
+        return raw
+
+
 def get_valid_number(prompt, min_val, max_val):
     """
     숫자 입력을 검증하는 공통 함수
@@ -10,7 +19,7 @@ def get_valid_number(prompt, min_val, max_val):
 
         # 1. 빈 입력 처리
         if raw == "":
-            print("⚠️ 값을 입력해 주세요.")
+            print("⚠️ 번호를 입력해 주세요.")
             continue
 
         # 2. 숫자 변환 실패 처리
