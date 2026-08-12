@@ -45,9 +45,6 @@ project-root/
   - answer (Int): 정답 번호 (1~4)
   - best_score (Int): 현재까지 기록된 최고 점수   
 
-> ## Git: README 작성 후 최종 푸시한다.
-
-
 > ## 실행화면 스크린샷
 * 퀴즈 등록
 
