@@ -6,9 +6,9 @@
   - IDE: Visual Studio Code
 
 > ## 퀴즈 주제와 선정 이유
-  파이썬 기초 퀴즈
+  퀴즈 주제: 파이썬 기초 퀴즈
   
-  선정 이유는 파이썬 기초도 공부할 겸 주제로 선정하게 되었다.
+  선정 이유: 파이썬 기초를 공부한 후 복습할 겸 활용해보고 싶었다.
 
 > ## 실행 방법
 * python main.py
@@ -51,14 +51,19 @@ project-root/
 > ## 실행화면 스크린샷
 * 퀴즈 등록
 
+<img width="1179" height="422" alt="퀴즈 등록" src="https://github.com/user-attachments/assets/77184b45-4dd9-41d0-a85f-a315aa33b1c2" />
 
 * 퀴즈 풀기
 
+<img width="867" height="713" alt="퀴즈풀기" src="https://github.com/user-attachments/assets/ffa57f13-7eae-4085-8b5a-3acdcaead256" />
+
 * 퀴즈 목록 조회
+  
+<img width="867" height="751" alt="퀴즈목록 조회" src="https://github.com/user-attachments/assets/9f1379fc-002f-41ae-a079-ec2c800864e1" />
 
 * 퀴즈 목록이 없을때
 
-<img width="605" height="547" alt="docs:screenshots:nullQuiz" src="https://github.com/user-attachments/assets/e9c2c40b-52de-42ba-a1b3-d29d3cc88ac8" />
+<img width="605" height="547" alt="퀴즈목록이 없을때" src="https://github.com/user-attachments/assets/b7241b0c-6f8c-4528-965b-b5895ad25283" />
 
 **  **
 ## 최종 결과물
