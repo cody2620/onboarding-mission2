@@ -217,12 +217,24 @@ project-root/
 - 퀴즈 등록할때 그냥 엔터도 등록이 됨
 
 8월 17일
-- **오류**: state.json 파일이 없는 상태에서 처음 실행해도 기본 퀴즈 데이터가 로드되지 않고, 퀴즈 0개인 빈 상태로 시작됨
+- ❗**오류**: state.json 파일이 없는 상태에서 처음 실행해도 기본 퀴즈 데이터가 로드되지 않고, 퀴즈 0개인 빈 상태로 시작됨
 
 - **원인**: `main.py`의 `init_game_state()` 함수가 `QuizGame`을 생성하기 *전에* 먼저 빈 퀴즈 목록(`quiz_list: []`)으로 state.json 파일을 만들어버림. 그러다 보니 `game.py`의 `load_from_json()`이 파일을 읽을 때는 이미 파일이 존재하는 상태라, "파일이 없을 때 기본 퀴즈 데이터를 사용한다"는 예외 처리 코드가 실행될 기회 자체가 없었음
 
   ✔️두 곳에서 같은 일(파일 초기화)을 나눠서 처리하다 보니, 먼저 실행되는 쪽이 나중 로직을 무력화시킨 경우
 
 - **해결**: `main.py`의 `init_game_state()` 함수와 그 호출을 제거. 파일 생성과 기본 데이터 로드를 `game.py`의 `QuizGame.load_from_json()` 한 곳에서만 담당하도록 정리함. 이제 state.json이 없으면 `FileNotFoundError` 예외 처리 분기가 정상적으로 실행되어 기본 퀴즈 데이터로 파일이 생성됨
+
+
+- ❗**오류**: 요구사항에서는 `Quiz` 클래스가 "퀴즈 출력, 정답 확인" 기능까지 갖도록 요구했지만, 실제로는 `Quiz`가 데이터 변환(to_dict/from_dict)만 담당하고, 문제 출력과 정답 비교는 전부 `QuizGame`(game.py)이 `Quiz`의 내부 속성(question, choices, answer)을 직접 꺼내 처리하고 있었음
+
+- **원인**: 클래스 설계 시 "데이터를 담는 역할"과 "데이터를 다루는 동작"을 분리하지 않고, 동작 로직을 전부 `QuizGame` 쪽에만 몰아서 구현함. 그 결과 `Quiz`는 단순 데이터 컨테이너 역할만 하고, `QuizGame`이 `quiz.answer == answer`처럼 다른 객체의 내부 데이터를 직접 들여다보며 비교하는 구조가 됨 (캡슐화 부족)
+
+- **해결**: `Quiz` 클래스에 다음 두 메서드를 추가함
+  - `display(index=None)` : 문제와 보기를 출력 (목록 조회 시엔 번호 포함, 퀴즈 풀 때는 번호 없이 출력)
+  - `check_answer(user_answer)` : 입력받은 답과 정답을 비교해 True/False 반환
+
+  그리고 `game.py`의 `_display_quiz_item`, `ask_question`이 `quiz.question` / `quiz.answer`를 직접 꺼내 쓰던 부분을 `quiz.display()`, `quiz.check_answer()` 호출로 교체함. 이제 "퀴즈를 어떻게 보여줄지, 정답을 어떻게 확인할지"는 `Quiz` 객체 스스로가 책임지고, `QuizGame`은 그 결과만 받아서 게임 진행에만 집중함
+
 
 
