@@ -8,6 +8,7 @@ class QuizGame:
         # 프로그램 실행 중에만 유지되는 퀴즈 리스트
         self.quiz_list = []
         self.best_score = 0
+        self.has_played = False
         self.load_from_json()
 
     # json에서 데이터 불러오기
@@ -27,6 +28,7 @@ class QuizGame:
             # 퀴즈 데이터 정상 로드
             self.quiz_list = [Quiz.from_dict(quiz) for quiz in data["quiz_list"]]
             self.best_score = data["best_score"]
+            self.has_played = data.get("has_played", False)
 
             print(f"✅ 저장된 데이터 로드 완료! (퀴즈: {len(self.quiz_list)}개, 최고점: {self.best_score}점)")
             
@@ -40,6 +42,7 @@ class QuizGame:
             # 기본 데이터로 객체 생성 및 할당
             self.quiz_list = [Quiz.from_dict(q) for q in default_quiz]
             self.best_score = 0
+            self.has_played = False
 
             # 복구된 데이터 다시 저장
             self.save_to_json()
@@ -48,7 +51,8 @@ class QuizGame:
     def save_to_json(self):
         data={
             "quiz_list": [quiz.to_dict() for quiz in self.quiz_list],
-            "best_score": self.best_score
+            "best_score": self.best_score,
+            "has_played": self.has_played
         }
 
         with open('state.json', 'w', encoding='utf-8') as f:
@@ -71,9 +75,7 @@ class QuizGame:
 
     # 2. [기능 분리] 퀴즈 하나를 출력하는 전담 메서드 (보조 일꾼)
     def _display_quiz_item(self, index, quiz):
-        print(f"\n[{index}번 문제] {quiz.question}")
-        for j, choice in enumerate(quiz.choices, 1):
-            print(f"  {j}. {choice}")
+        quiz.display(index)
         print(f"정답: {quiz.answer}")
 
     # 퀴즈 등록
@@ -96,6 +98,10 @@ class QuizGame:
         print("\n✅ 퀴즈가 성공적으로 등록되었습니다!")
 
     def show_myscore(self):
+        if not self.has_played:
+            print("\n아직 퀴즈를 풀지 않았습니다. 먼저 퀴즈를 풀어보세요!")
+            return
+
         print(f"\n현재까지 최고 점수: {self.best_score}점")
 
     def start_quiz(self):
@@ -111,20 +117,20 @@ class QuizGame:
                 score += 1
         print(f"\n결과: {score}/{len(self.quiz_list)}")
 
+        self.has_played = True
+
         if score > self.best_score:
             self.best_score = score
             print("🏆 최고 점수 갱신 🏆")
-            self.save_to_json()
+
+        self.save_to_json()
 
     def ask_question(self, quiz):
-        print(f"\n {quiz.question}")
-
-        for i, choice in enumerate(quiz.choices, start=1):
-            print(f"{i}. {choice}")
+        quiz.display()
 
         answer = get_valid_number("\n 정답: ", 1, len(quiz.choices))
 
-        if answer == quiz.answer:
+        if quiz.check_answer(answer):
             print("\n⭕ 정답입니다 ⭕")
             return True
         else:
