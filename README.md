@@ -226,13 +226,24 @@ project-root/
 - **해결**: `main.py`의 `init_game_state()` 함수와 그 호출을 제거. 파일 생성과 기본 데이터 로드를 `game.py`의 `QuizGame.load_from_json()` 한 곳에서만 담당하도록 정리함. 이제 state.json이 없으면 `FileNotFoundError` 예외 처리 분기가 정상적으로 실행되어 기본 퀴즈 데이터로 파일이 생성됨
 
 
-- ❗**오류**: 요구사항에서는 `Quiz` 클래스가 "퀴즈 출력, 정답 확인" 기능까지 갖도록 요구했지만, 실제로는 `Quiz`가 데이터 변환(to_dict/from_dict)만 담당하고, 문제 출력과 정답 비교는 전부 `QuizGame`(game.py)이 `Quiz`의 내부 속성(question, choices, answer)을 직접 꺼내 처리하고 있었음
+- ❗**수정할 것**: 요구사항에서는 `Quiz` 클래스가 "퀴즈 출력, 정답 확인" 기능까지 갖도록 요구했지만, 실제로는 `Quiz`가 데이터 변환(to_dict/from_dict)만 담당하고, 문제 출력과 정답 비교는 전부 `QuizGame`(game.py)이 `Quiz`의 내부 속성(question, choices, answer)을 직접 꺼내 처리하고 있었음
 
 - **원인**: 클래스 설계 시 "데이터를 담는 역할"과 "데이터를 다루는 동작"을 분리하지 않고, 동작 로직을 전부 `QuizGame` 쪽에만 몰아서 구현함. 그 결과 `Quiz`는 단순 데이터 컨테이너 역할만 하고, `QuizGame`이 `quiz.answer == answer`처럼 다른 객체의 내부 데이터를 직접 들여다보며 비교하는 구조가 됨 (캡슐화 부족)
 
 - **해결**: `Quiz` 클래스에 다음 두 메서드를 추가함
   - `display(index=None)` : 문제와 보기를 출력 (목록 조회 시엔 번호 포함, 퀴즈 풀 때는 번호 없이 출력)
   - `check_answer(user_answer)` : 입력받은 답과 정답을 비교해 True/False 반환
+
+
+- ❗**수정할 것**: "점수 확인" 메뉴에서 `show_myscore()`가 `best_score` 값을 조건 없이 그대로 출력함. 그 결과 "아직 한 번도 퀴즈를 풀지 않은 상태(0점)"와 "퀴즈를 풀었는데 전부 틀려서 0점을 받은 상태"가 화면상 똑같이 "최고 점수: 0점"으로 표시되어 구분이 안 됨
+
+- **원인**: `best_score`는 숫자값이라 "점수가 0점"과 "아직 점수 자체가 없음(미플레이)"을 같은 값(0)으로만 표현할 수 있었음. "사용자가 퀴즈를 한 번이라도 풀어봤는지" 여부를 별도로 기록하는 상태값이 없어서 발생한 문제
+
+- **해결**: `state.json` 스키마에 `has_played`(Boolean) 키를 추가함
+  - 기본값은 `false`(아직 안 풂)
+  - `start_quiz()`로 퀴즈를 한 번이라도 끝까지 풀면 `true`로 바뀌고 저장됨 (최고 점수를 갱신하지 못해도 플레이 여부는 항상 저장)
+
+  `show_myscore()`에서 `has_played`가 `false`면 "아직 퀴즈를 풀지 않았습니다. 먼저 퀴즈를 풀어보세요!" 안내를 띄우고, `true`일 때만 실제 최고 점수를 출력하도록 수정함. 이제 0점(플레이 후)과 미플레이 상태가 명확히 구분됨
 
   그리고 `game.py`의 `_display_quiz_item`, `ask_question`이 `quiz.question` / `quiz.answer`를 직접 꺼내 쓰던 부분을 `quiz.display()`, `quiz.check_answer()` 호출로 교체함. 이제 "퀴즈를 어떻게 보여줄지, 정답을 어떻게 확인할지"는 `Quiz` 객체 스스로가 책임지고, `QuizGame`은 그 결과만 받아서 게임 진행에만 집중함
 
