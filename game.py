@@ -15,11 +15,38 @@ class QuizGame:
     def load_from_json(self):
 
         # 기본 데이터
-        default_quiz = [{
-            "question": "다음 중 파이썬의 self에 대한 설명으로 사실이 아닌 것은?", 
-            "choices": ["인스턴스(객체) 자기 자신을 가리킨다.", "클래스 내의 함수를 정의할 때 첫 번째 매개변수는 관례적으로 self를 사용한다.", "(오답)메서드를 호출할 때, 사용자가 직접 self 자리에 인수를 전달해야 한다.", "self를 통해 클래스 내부에서 인스턴스 변수에 접근하거나 값을 수정할 수 있다."],
-            "answer": 3
-                    }]
+        default_quiz = [
+            {
+                "question": "다음 중 파이썬의 self에 대한 설명으로 사실이 아닌 것은?",
+                "choices": ["인스턴스(객체) 자기 자신을 가리킨다.", "클래스 내의 함수를 정의할 때 첫 번째 매개변수는 관례적으로 self를 사용한다.", "(오답)메서드를 호출할 때, 사용자가 직접 self 자리에 인수를 전달해야 한다.", "self를 통해 클래스 내부에서 인스턴스 변수에 접근하거나 값을 수정할 수 있다."],
+                "answer": 3
+            },
+            {
+                "question": "다음 중 파이썬에서 사용할 수 있는 올바른 변수명은?",
+                "choices": ["7th_player", "my name", "_my_score", "if"],
+                "answer": 3
+            },
+            {
+                "question": "다음 중 사용자로부터 데이터를 입력받을 때 사용하는 함수는?",
+                "choices": ["output()", "input()", "print()", "scan()"],
+                "answer": 2
+            },
+            {
+                "question": "파이썬에서 주석 처리할때 사용하는 특수문자가 아닌 것은?",
+                "choices": [" # ", " '' ", " \"\" ", " // "],
+                "answer": 4
+            },
+            {
+                "question": "다음 변수 a에 담긴 값의 자료형은? a = \"2024\" ",
+                "choices": ["int 정수", "str 문자열", "bool 불리언", "dict 딕셔너리"],
+                "answer": 2
+            },
+            {
+                "question": "다음 중 list에 해당하는 보기는?",
+                "choices": ["colors = \"red\", \"blue\"", "colors = {\"red\", \"blue\"}", "colors = [\"red\", \"blue\"]", "colors = {\"red\": \"blue\"}"],
+                "answer": 3
+            }
+        ]
 
         try:
             with open('state.json', 'r', encoding='utf-8') as f:
@@ -119,9 +146,14 @@ class QuizGame:
 
         self.has_played = True
 
-        if score > self.best_score:
+        previous_best = self.best_score
+        print(f"\n내 점수: {score}점 / 최고 점수: {previous_best}점")
+
+        if score > previous_best:
             self.best_score = score
             print("🏆 최고 점수 갱신 🏆")
+        else:
+            print("최고 점수를 넘지 못했습니다.")
 
         self.save_to_json()
 

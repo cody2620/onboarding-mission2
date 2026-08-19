@@ -51,16 +51,16 @@
       "answer": 3
     },
     {
-      "question": "문제예시",
+      "question": "오늘의 날짜는?",
       "choices": [
-        "보기1",
-        "보기2",
-        "보기3",
-        "보기4"
+        "1일",
+        "2일",
+        "3일",
+        "4일"
       ],
-      "answer": "4"
+      "answer": 3
     }
   ],
-  "best_score": 5,
+  "best_score": 6,
   "has_played": true
 }
