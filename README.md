@@ -32,11 +32,14 @@ project-root/
 └── 📄 utils.py    : 유틸리티 함수
 ```
 
-> ## 데이터 파일 설명(state.json 경로 / 역할 / 스키마)
+> ## 데이터 파일 설명
+
 * state.json 경로
   - ./state.json
+    
 * 역할
   - 퀴즈 데이터와 사용자 최고 기록을 JSON 형식으로 저장
+    
 * 스키마
   - quiz_list (List): 퀴즈 데이터의 집합
   - question (String): 문제 내용
@@ -45,19 +48,22 @@ project-root/
   - best_score (Int): 현재까지 기록된 최고 점수   
 
 > ## 실행화면 스크린샷
-* 퀴즈 등록
+
+* ### 퀴즈 등록
 
 <img width="1179" height="422" alt="퀴즈 등록" src="https://github.com/user-attachments/assets/77184b45-4dd9-41d0-a85f-a315aa33b1c2" />
+<br>
 
-* 퀴즈 풀기
+* ### 퀴즈 풀기
 
 <img width="867" height="713" alt="퀴즈풀기" src="https://github.com/user-attachments/assets/ffa57f13-7eae-4085-8b5a-3acdcaead256" />
+<br>
 
-* 퀴즈 목록 조회
+* ### 퀴즈 목록 조회
   
 <img width="867" height="751" alt="퀴즈목록 조회" src="https://github.com/user-attachments/assets/9f1379fc-002f-41ae-a079-ec2c800864e1" />
 
-* 퀴즈 목록이 없을때
+* ### 퀴즈 목록이 없을때
 
 <img width="605" height="547" alt="퀴즈목록이 없을때" src="https://github.com/user-attachments/assets/b7241b0c-6f8c-4528-965b-b5895ad25283" />
 
