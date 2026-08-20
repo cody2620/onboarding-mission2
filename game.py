@@ -3,18 +3,23 @@ from quiz import Quiz
 from utils import get_valid_number
 from utils import get_non_empty_string
 
+# 게임 전체를 관리하는 클래스.
+# 퀴즈 목록/최고점수 등 상태를 들고, 메뉴별 기능(풀기/등록/목록/점수)과
+# state.json 저장·불러오기를 담당한다. 개별 문제의 출력/채점은 Quiz에 위임한다.
 class QuizGame:
     def __init__(self):
-        # 프로그램 실행 중에만 유지되는 퀴즈 리스트
-        self.quiz_list = []
-        self.best_score = 0
-        self.has_played = False
-        self.load_from_json()
+        self.quiz_list = []     # Quiz 객체 리스트
+        self.best_score = 0     # 최고 점수
+        self.has_played = False # 퀴즈를 한 번이라도 풀었는지 여부 (0점과 미플레이 구분용)
+        self.load_from_json()   # 생성 시점에 state.json에서 상태를 복원
 
-    # json에서 데이터 불러오기
+    # === 파일 입출력 ===
+
+    # state.json에서 데이터 불러오기.
+    # 파일이 없거나(FileNotFoundError) 손상됐으면(JSONDecodeError) 기본 퀴즈로 복구한다.
     def load_from_json(self):
 
-        # 기본 데이터
+        # 파일이 없거나 손상됐을 때 사용할 기본 퀴즈 데이터
         default_quiz = [
             {
                 "question": "다음 중 파이썬의 self에 대한 설명으로 사실이 아닌 것은?",
@@ -57,7 +62,7 @@ class QuizGame:
             self.best_score = data["best_score"]
             self.has_played = data.get("has_played", False)
 
-            print(f"✅ 저장된 데이터 로드 완료! (퀴즈: {len(self.quiz_list)}개, 최고점: {self.best_score}점)")
+            print(f"✅ 저장된 데이터 로드 완료! (총 퀴즈: {len(self.quiz_list)}개, 최고점: {self.best_score}점)")
             
         except (FileNotFoundError, json.JSONDecodeError) as e:
             # 파일이 없거나(FileNotFoundError) 깨졌을 때(JSONDecodeError) 공통 처리
@@ -74,7 +79,8 @@ class QuizGame:
             # 복구된 데이터 다시 저장
             self.save_to_json()
 
-    # JSON에 데이터 저장하기
+    # 현재 상태(퀴즈 목록/최고점수/플레이 여부)를 state.json에 통째로 덮어쓴다.
+    # 퀴즈 등록/퀴즈 풀이 완료/프로그램 종료 시점마다 호출된다.
     def save_to_json(self):
         data={
             "quiz_list": [quiz.to_dict() for quiz in self.quiz_list],
@@ -87,25 +93,25 @@ class QuizGame:
 
         print("✅ 데이터가 저장되었습니다")
 
-    # 1. [기능 분리] 목록 보기 (전체 흐름 관리)
+    # === 메뉴 기능 ===
+
+    # 3. 퀴즈 목록 조회
     def show_quiz(self):
         print("\n--- 등록된 퀴즈 목록 ---")
-        
-        # 퀴즈가 하나도 없는 경우 예외 처리
+
         if not self.quiz_list:
             print("등록된 퀴즈가 없습니다. 퀴즈를 등록해 주세요!")
             return
 
-        # 리스트를 돌면서 각 퀴즈를 출력 (일꾼 메서드 호출)
         for i, quiz in enumerate(self.quiz_list, 1):
             self._display_quiz_item(i, quiz)
 
-    # 2. [기능 분리] 퀴즈 하나를 출력하는 전담 메서드 (보조 일꾼)
+    # 목록 조회 시 문제 하나를 "번호 + 정답"까지 함께 보여주는 보조 메서드
     def _display_quiz_item(self, index, quiz):
         quiz.display(index)
         print(f"정답: {quiz.answer}")
 
-    # 퀴즈 등록
+    # 2. 퀴즈 등록: 문제/보기 4개/정답 번호를 입력받아 Quiz로 만들고 저장
     def add_quiz(self):
         print("\n--- 새로운 퀴즈 등록 ---")
         question = get_non_empty_string("질문 입력: ")
@@ -116,14 +122,14 @@ class QuizGame:
             choices.append(choice)
 
         answer = get_valid_number("정답인 번호를 입력하세요: ", 1, 4)
-        
-        # Quiz 객체 생성 및 리스트에 추가
-        new_quiz = Quiz(question, choices, answer)    
+
+        new_quiz = Quiz(question, choices, answer)
         self.quiz_list.append(new_quiz)
         self.save_to_json()
 
         print("\n✅ 퀴즈가 성공적으로 등록되었습니다!")
 
+    # 4. 최고 점수 확인. 한 번도 플레이한 적 없으면 0점 대신 안내 메시지 출력
     def show_myscore(self):
         if not self.has_played:
             print("\n아직 퀴즈를 풀지 않았습니다. 먼저 퀴즈를 풀어보세요!")
@@ -131,11 +137,12 @@ class QuizGame:
 
         print(f"\n현재까지 최고 점수: {self.best_score}점")
 
+    # 1. 퀴즈 풀기: 전체 문제를 순서대로 출제하고 채점 → 최고 점수 갱신 → 저장
     def start_quiz(self):
         if not self.quiz_list:
             print("\n⚠️ 등록된 퀴즈가 없습니다. 퀴즈를 등록해주세요.")
             return
-        
+
         print("\n퀴즈를 시작합니다!")
 
         score = 0
@@ -157,6 +164,7 @@ class QuizGame:
 
         self.save_to_json()
 
+    # 문제 하나를 출제하고 사용자 답을 받아 채점 결과(True/False)를 반환
     def ask_question(self, quiz):
         quiz.display()
 
