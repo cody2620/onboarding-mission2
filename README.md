@@ -45,7 +45,8 @@ project-root/
   - question (String): 문제 내용
   - choices (List): 4지 선다형 보기 리스트
   - answer (Int): 정답 번호 (1~4)
-  - best_score (Int): 현재까지 기록된 최고 점수   
+  - best_score (Int): 현재까지 기록된 최고 점수
+  - has_played(boolean): 0점과 한번도 퀴즈 풀지 않은 사람 구분   
 
 > ## 실행화면 스크린샷
 
