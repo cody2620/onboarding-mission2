@@ -78,6 +78,28 @@ project-root/
 
 <img width="605" height="547" alt="퀴즈목록이 없을때" src="https://github.com/user-attachments/assets/b7241b0c-6f8c-4528-965b-b5895ad25283" />
 
+> git convention
+ 
+
+> 개인공부
+
+### 파이썬 함수
+```
+# __init__
+객체가 만들어질때 자동으로 실행되는 초기화 함수
+
+# __init__new
+싱글톤 패턴, 불변 객체, 메타 프로그래밍에서 사용
+
+#
+
+```
+
+### git
+깃 플로우? pull requests? 비교
+
+
+
 ** **
 ### ❗오류 및 수정할 것들
 
