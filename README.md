@@ -78,8 +78,16 @@ project-root/
 
 <img width="605" height="547" alt="퀴즈목록이 없을때" src="https://github.com/user-attachments/assets/b7241b0c-6f8c-4528-965b-b5895ad25283" />
 
-> git convention
+
+> ## git convention
+
+| 타입 | 설명 |
+|------|------|
+| **feat** | 새로운 기능 추가 |
+| **fix** | 오류 수정 | 
+| **docs** | 문서, 주석 | 
  
+<br>
 
 > 개인공부
 
@@ -91,7 +99,7 @@ project-root/
 # __init__new
 싱글톤 패턴, 불변 객체, 메타 프로그래밍에서 사용
 
-#
+# try~ with open 에서 with
 
 ```
 
